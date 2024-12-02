@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas App - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1352.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/amazon-cognito-identity-js/6.2.2/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/signin.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Ideas App</h1>
+        <form id="signinForm">
+            <input type="email" id="emailInputSignin" placeholder="Email" required>
+            <input type="password" id="passwordInputSignin" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+        <form id="registrationForm">
+            <input type="email" id="emailInputRegister" placeholder="Email" required>
+            <input type="password" id="passwordInputRegister" placeholder="Password" required>
+            <input type="password" id="password2InputRegister" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
