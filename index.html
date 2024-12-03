@@ -3,28 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ideas App - Login</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1352.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/amazon-cognito-identity-js/6.2.2/amazon-cognito-identity.min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/signin.js" defer></script>
+    <title>Items List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            background-color: #f2f2f2;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        li:nth-child(even) {
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Ideas App</h1>
-        <form id="signinForm">
-            <input type="email" id="emailInputSignin" placeholder="Email" required>
-            <input type="password" id="passwordInputSignin" placeholder="Password" required>
-            <button type="submit">Sign In</button>
-        </form>
-        <form id="registrationForm">
-            <input type="email" id="emailInputRegister" placeholder="Email" required>
-            <input type="password" id="passwordInputRegister" placeholder="Password" required>
-            <input type="password" id="password2InputRegister" placeholder="Confirm Password" required>
-            <button type="submit">Register</button>
-        </form>
-    </div>
+
+    <h1>Items from DynamoDB</h1>
+    <ul id="items-list">
+        <!-- Items will be dynamically inserted here -->
+    </ul>
+
+    <script>
+        // The URL of your API Gateway endpoint
+        const apiUrl = 'https://9qtu51zu2b.execute-api.us-east-1.amazonaws.com/prod/items';
+
+        // Fetch the items from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Check if there are items to display
+                const itemsList = document.getElementById('items-list');
+                
+                if (data && data.data && data.data.length > 0) {
+                    data.data.forEach(item => {
+                        // Create a list item for each item returned
+                        const listItem = document.createElement('li');
+                        listItem.textContent = JSON.stringify(item); // Display item as JSON string
+                        itemsList.appendChild(listItem);
+                    });
+                } else {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = 'No items found.';
+                    itemsList.appendChild(listItem);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching items:', error);
+                const itemsList = document.getElementById('items-list');
+                const listItem = document.createElement('li');
+                listItem.textContent = 'Failed to load items. Please try again later.';
+                itemsList.appendChild(listItem);
+            });
+    </script>
+
 </body>
 </html>
