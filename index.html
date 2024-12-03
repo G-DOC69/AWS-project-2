@@ -40,8 +40,22 @@
 
         // Fetch the items from the API
         fetch(apiUrl)
-            .then(response => response.json())
+            .then(response => {
+                // Log the full response object for debugging
+                console.log('Response:', response);
+
+                // Check if the response is okay (status code 200-299)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                // Return the JSON data from the response
+                return response.json();
+            })
             .then(data => {
+                // Log the parsed JSON data to the console
+                console.log('Data:', data);
+
                 // Check if there are items to display
                 const itemsList = document.getElementById('items-list');
                 
